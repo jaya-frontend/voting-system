@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voting System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      text-align: center;
+      padding: 30px 15px;
+    }.container {
+  max-width: 450px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px #ccc;
+}
+
+input, button {
+  padding: 10px;
+  margin: 6px;
+  border-radius: 5px;
+}
+
+input {
+  width: 80%;
+  border: 1px solid #ccc;
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+#message {
+  margin-top: 15px;
+  color: #2563eb;
+}
+
+#results {
+  white-space: pre-line;
+  text-align: left;
+  margin-top: 20px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Voting System</h1>
+    <p>Add options and cast your vote.</p><input type="text" id="optionInput" placeholder="Enter new option">
+<button onclick="addNewOption()">Add Option</button>
+
+<h3>Vote</h3>
+<input type="text" id="voterId" placeholder="Enter voter ID">
+<div id="options"></div>
+
+<p id="message"></p>
+
+<h3>Poll Results</h3>
+<button onclick="showResults()">Show Results</button>
+<div id="results"></div>
+
+  </div>  <script src="script.js"></script>  <script>
+    function addNewOption() {
+      const input = document.getElementById("optionInput");
+      const message = addOption(input.value.trim());
+      document.getElementById("message").textContent = message;
+      input.value = "";
+      showOptions();
+      showResults();
+    }
+
+    function showOptions() {
+      const container = document.getElementById("options");
+      container.innerHTML = "";
+
+      for (const option of poll.keys()) {
+        const button = document.createElement("button");
+        button.textContent = "Vote for " + option;
+        button.onclick = () => {
+          const voter = document.getElementById("voterId").value.trim();
+
+          if (!voter) {
+            document.getElementById("message").textContent =
+              "Please enter your voter ID.";
+            return;
+          }
+
+          document.getElementById("message").textContent =
+            vote(option, voter);
+
+          showResults();
+        };
+
+        container.appendChild(button);
+      }
+    }
+
+    function showResults() {
+      document.getElementById("results").textContent =
+        displayResults();
+    }
+
+    showOptions();
+    showResults();
+  </script></body>
+</html>
